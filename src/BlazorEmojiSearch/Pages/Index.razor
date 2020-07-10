@@ -4,7 +4,7 @@
 
     <div class="ui text container">
         <h1 class="ui inverted header">
-            Emoji search
+            Em<span style="font-size: 0.7em;padding: 0px;margin: -6px;">🙂</span>ji search
         </h1>
 
         <div class="row">
@@ -43,7 +43,7 @@
 
     private async Task OnSearchKeyUpAsync(KeyboardEventArgs eventArgs)
     {
-        if (eventArgs.Key == "Enter")        // fire on enter 
+        if (eventArgs.Key == "Enter")  // fire on enter 
         {
             await _emojiSearch.SearchAsync(_query);
         }

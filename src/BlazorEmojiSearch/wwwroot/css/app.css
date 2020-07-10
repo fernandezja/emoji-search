@@ -33,8 +33,7 @@
 }
 
 .masthead.segment {
-    min-height: 400px;
-    padding: 1em 0em;
+    padding: 1.5em 0em;
 }
 
 .masthead .logo.item img {
@@ -46,8 +45,7 @@
 }
 
 .masthead h1.ui.header {
-    margin-top: 1.5em;
-    margin-bottom: 0em;
+    margin-bottom: 0.2em;
     font-size: 4em;
     font-weight: normal;
 }
@@ -92,7 +90,8 @@
     }
 
 .footer.segment {
-    padding: 5em 0em;
+    border-top: 1px solid #808080 !important;
+    padding: 1.5em 0em;
 }
 
 .secondary.pointing.menu .toc.item {
@@ -145,7 +144,6 @@
 
     .masthead h1.ui.header {
         font-size: 2em;
-        margin-top: 1.5em;
     }
 
     .masthead h2 {
