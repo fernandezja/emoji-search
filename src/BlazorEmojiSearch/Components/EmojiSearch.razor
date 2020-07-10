@@ -3,13 +3,14 @@
 <div class="ui content result-content">
 @if (_searching)
 {
+    <div class="ui active inline loader"></div>
     <p><em>Searching...</em></p>
 }
 else
 {
     @if (emojisResult != null && emojisResult.Any()) 
     { 
-        <div class="ui cards">
+        <div class="ui centered cards">
             @foreach (var e in emojisResult)
             {
                 <EmojiContent Emoji="e" />
@@ -69,11 +70,7 @@ else
 
     public async Task SearchAsync(string query)
     {
-        _isFirstTime = false;
-        Query = query;
-
-        _searching = true;
-        emojisResult = null;
+        InitQuery(query);
 
         await (GetDataAsync());
 
@@ -86,10 +83,7 @@ else
 
     public async Task RandomAsync()
     {
-        _isFirstTime = false;
-        _searching = true;
-        Query = string.Empty;
-        emojisResult = null;
+        InitQuery(string.Empty);
 
         await (GetDataAsync());
 
@@ -100,6 +94,14 @@ else
 
     }
 
+    private void InitQuery(string query) {
+        _isFirstTime = false;
+        Query = query;
+        _searching = true;
+        emojisResult = null;
+        StateHasChanged();
+
+    }
 
     private void SearchStrategy(string query)
     {
