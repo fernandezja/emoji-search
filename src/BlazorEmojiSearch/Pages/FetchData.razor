@@ -1,0 +1,42 @@
+@page "/fetchdata"
+@inject HttpClient Http
+
+<h1>Emojis</h1>
+
+
+@if (emojis == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Emoji</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in emojis)
+            {
+            <tr>
+                <td>@e.Emoji</td>
+                <td>@e.ShortName</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<EmojiItem> emojis;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        emojis = await Http.GetFromJsonAsync<List<EmojiItem>>("data/data-emoji.json");
+
+    }
+
+}

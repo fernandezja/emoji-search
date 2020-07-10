@@ -1,0 +1,37 @@
+﻿@inject IJSRuntime JSRuntime
+
+<div class="card">
+    <div class="content emoji-item-content">
+        <div class="emoji-item-emoji"><span>@Emoji.Emoji</span></div>
+        <div class="emoji-item-data">
+            <h3 class="emoji-item-name">@Emoji.ShortName</h3>
+            <p class="emoji-item-description description">
+                @Emoji.Group
+            </p>
+            <div class="emoji-item-action-content">
+                <button type="button" class="btn emoji-item-action" @onclick="CopyTextToClipboardAsync" title="Copy to Clipboard">
+                    <i class="clipboard outline icon"></i>
+                </button>
+                @if (string.IsNullOrEmpty(_message))
+                {
+                    <span class="emoji-item-action-message">@_message</span>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public EmojiItem Emoji { get; set; }
+
+    private string _message;
+
+    private async Task CopyTextToClipboardAsync()
+    {
+        await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", Emoji.Chars);
+        _message = "Copied to clipboard!";
+        StateHasChanged();
+    }
+}

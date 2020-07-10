@@ -1,0 +1,137 @@
+@inject HttpClient Http
+
+
+@if (_searching)
+{
+    <p><em>Searching...</em></p>
+}
+else
+{
+    @if (emojisResult != null && emojisResult.Any()) 
+    { 
+        <div class="ui cards">
+            @foreach (var e in emojisResult)
+            {
+                <EmojiContent Emoji="e" />
+            }
+        </div>
+    }
+    else
+    {
+        <div class="ui warning message">
+            <i class="close icon"></i>
+            <div class="header">
+                Sorry!, couldn't find any emoji matching
+            </div>
+            Please try again or maybe <a href="#all" @onclick="@(async () => await SearchAsync(string.Empty))"
+                                            @onclick:preventDefault>list all clicking here</a>.
+        </div>
+    }
+}
+
+
+
+
+@code {
+    [Parameter]
+    public string Query { get; set; }
+
+    private bool _searching = false;
+
+    private List<EmojiItem> emojisData = null;
+    private List<EmojiItem> emojisResult = null;
+
+    private int _groupCountPerRow = 3;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await (GetDataAsync());
+    }
+
+    private async Task GetDataAsync()
+    {
+        //TODO: Encapsulate to component
+
+        if (emojisData == null)
+        {
+
+            //emojisData = await Http.GetFromJsonAsync<List<EmojiItem>>(requestUri: "https://raw.githubusercontent.com/fernandezja/full-emoji-unicode-json/master/emojis.json");
+            //Error GetFromJsonAsync requires the content-type to be application/json or application/{media-type}+json and raw.githubusercontent
+
+            //Get remote
+            var dataResponse = await Http.GetAsync(requestUri: "https://raw.githubusercontent.com/fernandezja/full-emoji-unicode-json/master/emojis.min.json");
+            var dataString = await dataResponse.Content.ReadAsStringAsync();
+
+            emojisData = System.Text.Json.JsonSerializer.Deserialize<List<EmojiItem>>(dataString);
+
+        }
+    }
+
+    public async Task SearchAsync(string query)
+    {
+        Query = query;
+
+        _searching = true;
+        emojisResult = null;
+
+        await (GetDataAsync());
+
+        SearchStrategy(Query);
+
+        _searching = false;
+        StateHasChanged();
+
+    }
+
+    public async Task RandomAsync()
+    {
+        _searching = true;
+        Query = string.Empty;
+        emojisResult = null;
+
+        await (GetDataAsync());
+
+        RandomStrategy();
+
+        _searching = false;
+        StateHasChanged();
+
+    }
+
+
+    private void SearchStrategy(string query)
+    {
+
+        if (string.IsNullOrEmpty(Query))
+        {
+            emojisResult = emojisData;
+            _searching = false;
+            StateHasChanged();
+            return;
+        }
+
+        const string UNDERSCORE = "_";
+
+        var queryParsed = Query.Split(UNDERSCORE, StringSplitOptions.RemoveEmptyEntries);
+
+        //var q = from e in emojisData
+        //        where e.ShortNameToArray.ContainsAny(queryParsed)
+        //        select e;
+
+        var q = from e in emojisData
+                where e.ShortNameToArray.LikeAny(queryParsed)
+                select e;
+
+        emojisResult = q.ToList();
+    }
+
+
+    private void RandomStrategy()
+    {
+        var rand = new Random((int)DateTime.Now.Ticks);
+        var randomIndex = rand.Next(1, emojisData.Count);
+
+        emojisResult = new List<EmojiItem>() { emojisData[randomIndex - 1] };
+    }
+
+}

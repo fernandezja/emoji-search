@@ -1,0 +1,60 @@
+﻿@page "/"
+
+<div class="ui inverted vertical masthead center aligned segment">
+
+    <div class="ui text container">
+        <h1 class="ui inverted header">
+            Emoji search
+        </h1>
+
+        <div class="row">
+            <div class="ui huge icon input">
+                <input type="search" name="emoji" placeholder="Emoji to search..." class="" 
+                       @bind-value="_query" 
+                       @onkeyup="OnSearchKeyUpAsync" />
+                <i class="search icon"></i>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <br />
+            <span>What does fate have for me?</span>
+            <button class="ui primary button" 
+                    @onclick="@(async () => await OnClickRandomAsync())"><i class="lightbulb outline icon"></i> Random</button>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<EmojiSearch @ref="_emojiSearch"  />
+
+
+@code {
+
+    private string _query;
+    //ElementReference _emojiSearch;
+    EmojiSearch  _emojiSearch;
+
+
+
+    private async Task OnSearchKeyUpAsync(KeyboardEventArgs eventArgs)
+    {
+        if (eventArgs.Key == "Enter")        // fire on enter 
+        {
+            await _emojiSearch.SearchAsync(_query);
+        }
+
+        return;
+    }
+
+    private async Task OnClickRandomAsync()
+    {
+        await _emojiSearch.RandomAsync();
+    }
+
+
+}
