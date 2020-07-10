@@ -24,13 +24,9 @@ jobs:
         with:
           dotnet-version: 3.1.301
 
-      - name: Install dependencies
+      - name: Publish App
         working-directory: src
-        run: dotnet restore
-
-      - name: Build
-        working-directory: src
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet publish -c Release -o publish
 
       - name: Build And Deploy
         id: builddeploy
@@ -41,9 +37,9 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match you app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "published/wwwroot" # App source code path
+          app_location: "src/publish/wwwroot" # App source code path
           api_location: "api" # Api source code path - optional
-          app_artifact_location: "published/wwwroot" # Built app content directory - optional
+          app_artifact_location: "src/publish/wwwroot" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
