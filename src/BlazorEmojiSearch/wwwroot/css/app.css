@@ -92,10 +92,16 @@
 .footer.segment {
     border-top: 1px solid #808080 !important;
     padding: 1.5em 0em;
+    margin-top: 6em !important;
+    margin-bottom: 1em !important;
 }
 
 .secondary.pointing.menu .toc.item {
     display: none;
+}
+
+.result-content {
+    margin:15px;
 }
 
 .emoji-item-content {

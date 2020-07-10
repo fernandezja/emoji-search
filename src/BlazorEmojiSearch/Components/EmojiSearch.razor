@@ -1,6 +1,6 @@
 @inject HttpClient Http
 
-
+<div class="ui content result-content">
 @if (_searching)
 {
     <p><em>Searching...</em></p>
@@ -16,8 +16,9 @@ else
             }
         </div>
     }
-    else
+    else if(!_isFirstTime)
     {
+        
         <div class="ui warning message">
             <i class="close icon"></i>
             <div class="header">
@@ -28,7 +29,7 @@ else
         </div>
     }
 }
-
+</div>
 
 
 
@@ -36,6 +37,7 @@ else
     [Parameter]
     public string Query { get; set; }
 
+    private bool _isFirstTime = true;
     private bool _searching = false;
 
     private List<EmojiItem> emojisData = null;
@@ -67,6 +69,7 @@ else
 
     public async Task SearchAsync(string query)
     {
+        _isFirstTime = false;
         Query = query;
 
         _searching = true;
@@ -83,6 +86,7 @@ else
 
     public async Task RandomAsync()
     {
+        _isFirstTime = false;
         _searching = true;
         Query = string.Empty;
         emojisResult = null;
