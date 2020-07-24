@@ -4,7 +4,7 @@ Emoji search 🙂🔎, an offline PWA app using Blazor WebAssembly and C#
 ![.NET Core](https://github.com/fernandezja/emoji-search/workflows/.NET%20Core/badge.svg)
 
 ## Demo 
-![Azure Static Web Apps](https://raw.githubusercontent.com/fernandezja/emoji-search/master/assets/azure-static-web-apps-icon-40x40.png)
+[![Azure Static Web Apps](https://raw.githubusercontent.com/fernandezja/emoji-search/master/assets/azure-static-web-apps-icon-40x40.png)](https://wonderful-meadow-0efd48c1e.azurestaticapps.net?from=github)
 
 Try online demo (deployed in [Azure Static Web Apps (Preview)](https://azure.microsoft.com/en-us/services/app-service/static/))
  - [https://wonderful-meadow-0efd48c1e.azurestaticapps.net](https://wonderful-meadow-0efd48c1e.azurestaticapps.net?from=github)
