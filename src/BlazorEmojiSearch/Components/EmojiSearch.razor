@@ -1,35 +1,40 @@
+@using Microsoft.AspNetCore.Components.Web.Virtualization 
 @inject HttpClient Http
 
-<div class="ui content result-content">
-@if (_searching)
-{
-    <div class="ui active inline loader"></div>
-    <p><em>Searching...</em></p>
-}
-else
-{
-    @if (emojisResult != null && emojisResult.Any()) 
-    { 
-        <div class="ui centered cards">
-            @foreach (var e in emojisResult)
-            {
-                <EmojiContent Emoji="e" />
-            }
-        </div>
-    }
-    else if(!_isFirstTime)
+<div class="ui content result-content cards">
+    @if (_searching)
     {
-        
-        <div class="ui warning message">
-            <i class="close icon"></i>
-            <div class="header">
-                Sorry!, couldn't find any emoji matching
-            </div>
-            Please try again or maybe <a href="#all" @onclick="@(async () => await SearchAsync(string.Empty))"
-                                            @onclick:preventDefault>list all clicking here</a>.
-        </div>
+        <div class="ui active inline loader"></div>
+        <p><em>Searching...</em></p>
     }
-}
+    else
+    {
+        @if (emojisResult != null && emojisResult.Any())
+        {
+            <Virtualize Context="emoji" Items="@emojisResult">
+                <ItemContent>
+                    <EmojiContent Emoji="emoji" />
+                </ItemContent>
+                <Placeholder>
+                    <p>
+                        Loading&hellip;
+                    </p>
+                 </Placeholder>
+            </Virtualize>
+        }
+        else if (!_isFirstTime)
+        {
+
+            <div class="ui warning message">
+                <i class="close icon"></i>
+                <div class="header">
+                    Sorry!, couldn't find any emoji matching
+                </div>
+                Please try again or maybe <a href="#all" @onclick="@(async () => await SearchAsync(string.Empty))"
+                                             @onclick:preventDefault>list all clicking here</a>.
+            </div>
+        }
+    }
 </div>
 
 
