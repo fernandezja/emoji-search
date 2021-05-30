@@ -8,7 +8,7 @@
     <BlazorWebAssemblyPreserveCollationData>false</BlazorWebAssemblyPreserveCollationData>
     <VersionPrefix>1.5.0</VersionPrefix>
     <VersionSuffix>20210530</VersionSuffix>
-    <FileVersion>1.5.0.0-20210530</FileVersion>
+    <FileVersion>1.5.0-20210530</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
