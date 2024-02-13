@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "cdnjs",
+      "library": "semantic-ui@2.5.0",
+      "destination": "wwwroot/lib/semantic-ui/"
+    }
+  ]
+}
