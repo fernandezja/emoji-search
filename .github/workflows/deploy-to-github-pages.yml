@@ -31,5 +31,5 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: release/wwwroot
+        FOLDER: src/BlazorEmojiSearch.Client/bin/Release/net8.0/wwwroot
         SINGLE_COMMIT: true
